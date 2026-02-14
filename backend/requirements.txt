@@ -5,3 +5,4 @@ pandas
 numpy
 joblib
 PyPDF2
+gunicorn
