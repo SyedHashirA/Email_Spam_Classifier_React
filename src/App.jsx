@@ -7,25 +7,38 @@ export default function App() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setError(null)
-    setResult(null)
-    if (!file) { setError('Please choose a PDF first.'); return }
-    const form = new FormData()
-    form.append('file', file)
-    setLoading(true)
-    try {
-      const res = await fetch('https://email-spam-classifier-react.onrender.com/api/predict', { method: 'POST', body: form })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Prediction failed')
-      setResult(data)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
+  const API_BASE = 'https://email-spam-classifier-react.onrender.com'
+
+async function handleSubmit(e) {
+  e.preventDefault()
+  setError(null)
+  setResult(null)
+
+  if (!file) {
+    setError('Please choose a PDF first.')
+    return
   }
+
+  const form = new FormData()
+  form.append('file', file)
+
+  setLoading(true)
+  try {
+    const res = await fetch(`${API_BASE}/api/predict`, {
+      method: 'POST',
+      body: form
+    })
+
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error || 'Prediction failed')
+    setResult(data)
+
+  } catch (err) {
+    setError(err.message)
+  } finally {
+    setLoading(false)
+  }
+}
 
   return (
     <div className="container">
