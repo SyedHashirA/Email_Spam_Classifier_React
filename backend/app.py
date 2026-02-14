@@ -9,8 +9,13 @@ from PyPDF2 import PdfReader
 app = Flask(__name__)
 CORS(app)
 
-MODEL_PATH = os.environ.get("MODEL_PATH", os.path.join(os.path.dirname(__file__), "models", "model.joblib"))
-METRICS_PATH = os.path.join(os.path.dirname(__file__), "models", "metrics.json")
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.environ.get(
+    "MODEL_PATH",
+    os.path.join(BASE_DIR, "model.joblib")
+)
+
+METRICS_PATH = os.path.join(BASE_DIR, "metrics.json")
 
 # Lazy load model
 _model = None
