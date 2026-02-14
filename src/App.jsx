@@ -16,7 +16,7 @@ export default function App() {
     form.append('file', file)
     setLoading(true)
     try {
-      const res = await fetch('/api/predict', { method: 'POST', body: form })
+      const res = await fetch('https://email-spam-classifier-react.onrender.com', { method: 'POST', body: form })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Prediction failed')
       setResult(data)
